@@ -13,28 +13,17 @@ let input = document.querySelector(".search_song");
 let searchResults = document.querySelector(".results");
 let musicPlayer = document.querySelector(".music_player")
 let albumButton = document.querySelectorAll(".albumBtn")
-var divWithSample = document.querySelector(".sampleSrc")
-
-
-function runThatIsh(){
-  console.log("you pressed a button");
-  var source = document.querySelector(".audioSource");
-  source.src = this.divWithSample.src
-
-  musicPlayer.load();
-  musicPlayer.play();
-}
+var audioSource = document.querySelector(".audioSource");
 
 
 
 siteControls.addEventListener("click", function(e) {
   let inputValue = input.value;
-  console.log("E is: ", e)
-
-
+  console.log("e is: ", e)
 
 
   if (e.target === searchButton) {
+    
     fetch(`https://itunes.apple.com/search?term=${inputValue}`).then(
 
         function(response) {
@@ -54,7 +43,7 @@ siteControls.addEventListener("click", function(e) {
               console.log("one of the results is: ", track);
 
               let albumCover = track.artworkUrl100
-              let sample = track.previewUrl
+              var sample = track.previewUrl
               let artist = track.artistName
               let songTitle = track.trackName
               console.log(artist)
@@ -65,7 +54,7 @@ siteControls.addEventListener("click", function(e) {
 
                           <div class="sampleSrc" src="${sample}"></div>
 
-                          <button class="albumBtn" name="button" onclick="runThatIsh()"> <img class="image" src="${albumCover}" alt="album_cover" data-value:"${sample}"> </button>
+                          <a href="#" src="${sample}"><button class="albumBtn" name="button" ><img class="image" value="${sample}" src="${albumCover}" alt="album_cover"> </button></a>
 
                           <div id="title">${songTitle}</div>
                           </div>`
@@ -79,8 +68,6 @@ siteControls.addEventListener("click", function(e) {
 
 
 
-
-
           });
 
         })
@@ -88,6 +75,12 @@ siteControls.addEventListener("click", function(e) {
         console.log("fetch error :-S", err);
 
       });
-
+  }
+//let's sample some music
+  if(e.target && e.target.matches("img.image")){
+      console.log("you pressed a button", e.target);
+      audioSource.src = e.target.getAttribute('value');
+      musicPlayer.load();
+      musicPlayer.play();
   }
 })
