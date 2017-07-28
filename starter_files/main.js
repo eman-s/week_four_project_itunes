@@ -23,7 +23,7 @@ siteControls.addEventListener("click", function(e) {
 
 
   if (e.target === searchButton) {
-    
+
     fetch(`https://itunes.apple.com/search?term=${inputValue}`).then(
 
         function(response) {
@@ -49,9 +49,8 @@ siteControls.addEventListener("click", function(e) {
               console.log(artist)
 
 
-              let renderTracks = `<h3>${artist}</h3>
-                          <div class="box">
-
+              let renderTracks = `<div class="box">
+                          <h3>${artist}</h3>
                           <div class="sampleSrc" src="${sample}"></div>
 
                           <a href="#" src="${sample}"><button class="albumBtn" name="button" ><img class="image" value="${sample}" src="${albumCover}" alt="album_cover"> </button></a>
